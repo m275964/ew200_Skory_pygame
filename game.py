@@ -1,6 +1,6 @@
 # Example file showing a basic pygame "game loop"
 import pygame
-
+   
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
