@@ -29,7 +29,8 @@ TILE_SIZE = WATER.get_width()
 for x in range(0, WIDTH, TILE_SIZE):
     for y in range(0, HEIGHT, TILE_SIZE):
         background.blit(WATER, (x, y))
-        
+        if (x > TILE_SIZE*2) and (x < (WIDTH - TILE_SIZE*3)):
+            background.blit(GRASS, (x, y))
 
 
 
