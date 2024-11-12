@@ -28,42 +28,66 @@ class Player(pygame.sprite.Sprite):
     
     def check_keys(self):
         press = pygame.key.get_pressed()
+        # if press[pygame.K_w]:
+        #     self.speed -= 0.1
+        # if press[pygame.K_s]:
+        #     self.speed += 0.1
+        # if (not press[pygame.K_w]) and (not press[pygame.K_s]):
+        #     self.speed = 0
+
+        # if press[pygame.K_a]:
+        #     self.theta += 1
+        # if press[pygame.K_d]:
+        #     self.theta -= 1
+
         if press[pygame.K_w]:
-            self.speed += 0.1
+            self.y -= 1
         if press[pygame.K_s]:
-            self.speed -= 0.1
-        if (not press[pygame.K_w]) and (not press[pygame.K_s]):
-            self.speed = 0
+            self.y += 1
+        # if (not press[pygame.K_w]) and (not press[pygame.K_s]):
+        #     self.speed = 0
 
         if press[pygame.K_a]:
-            self.theta += 1
+            self.x -= 1
         if press[pygame.K_d]:
-            self.theta -= 1
+            self.x += 1
 
     def border(self):
         
-        border_rect = pygame.rect.Rect(0,0, self.screen_w, self.screen_h)
-        if not border_rect.contains(self.rect):
-            if pygame.time.get_ticks() - self.reverse_time > 500:
-                self.speed = -0.2 *self.speed
-                self.reverse_time = pygame.time.get_ticks()
+        # border_rect = pygame.rect.Rect(0,0, self.screen_w, self.screen_h)
+        # if not border_rect.contains(self.rect):
+        #     if pygame.time.get_ticks() - self.reverse_time > 500:
+        #         self.speed = -0.2 *self.speed
+        #         self.reverse_time = pygame.time.get_ticks()
+        if self.x < 0:
+            self.x = 0
+        elif self.x > self.screen_w:
+            self.x = self.screen_w
+
+        if self.y < 0:
+            self.y = 0
+        elif self.y > self.screen_h:
+            self.y = self.screen_h
+
+        return self.x, self.y
 
     def update(self):
 
-        self.border()
-        if self.speed > self.max_speed:
-            self.speed = self.max_speed
-        elif self.speed < -self.max_speed:
-            self.speed = -self.max_speed
+        # self.border()
+        # if self.speed > self.max_speed:
+        #     self.speed = self.max_speed
+        # elif self.speed < -self.max_speed:
+        #     self.speed = -self.max_speed
         
-        rad = self.radians(self.theta)
-        x_dot = cos(rad) * self.speed
-        y_dot = sin(rad) * self.speed
+        # rad = self.radians(self.theta)
+        # x_dot = cos(rad) * self.speed
+        # y_dot = sin(rad) * self.speed
 
-        self.x += x_dot
-        self.y -= y_dot
+        # self.x += x_dot
+        # self.y -= y_dot
+
+
 
         self.image = pygame.transform.rotozoom(self.orig_image, self.theta - 270, 1.2)
         self.rect = self.image.get_rect(center= (self.x, self.y))
-
-        
+        self.border()

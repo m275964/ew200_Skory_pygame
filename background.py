@@ -22,7 +22,13 @@ def build_background(WIDTH, HEIGHT):
     RIGHT_WALL = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0013.png')
     RIGHT_BACK_CORNER = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0005.png')
 
-
+    #train tracks
+    HOR_TRACK = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0094.png')
+    VER_TRACK = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0083.png')
+    LEFT_TOP_CORNER_TRACK = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0069.png')
+    RIGHT_TOP_CORNER_TRACK = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0071.png')
+    LEFT_BOTTOM_CORNER_TRACK = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0093.png')
+    RIGHT_BOTTOM_CORNER_TRACK = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0095.png')
 
     TILE_SIZE = DIRT.get_width()
     print(TILE_SIZE)
@@ -56,6 +62,14 @@ def build_background(WIDTH, HEIGHT):
                 background.blit(TOP_WALL, (x,y))
             elif ((x == (16*TILE_SIZE)) or (x == (32*TILE_SIZE))) and y == (8*TILE_SIZE):
                 background.blit(RIGHT_FRONT_CORNER, (x,y))
+
+            #TRAIN TRACKS
+            if ((x >= 0) and (x < 24*TILE_SIZE)) and (y== 24*TILE_SIZE):
+                background.blit(HOR_TRACK, (x,y))
+            elif ((x == 24*TILE_SIZE) and (y==24*TILE_SIZE)):
+                background.blit(RIGHT_TOP_CORNER_TRACK, (x,y))
+            elif ((x == 24*TILE_SIZE) and (y>24*TILE_SIZE)):
+                background.blit(VER_TRACK, (x,y))
             
             
 
