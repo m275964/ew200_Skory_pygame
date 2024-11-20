@@ -52,12 +52,22 @@ while running:
     #blit the background to the screen
     screen.blit(background, (0,0))
 
+    #creates a collision between objects in the games, not that smooth so far
+    press = pygame.key.get_pressed()
     r,g,b,_ = screen.get_at(player_1.rect.center)
     print(r, g, b)
-    if (r in range(185,195)) and (g in range(195,205)) and (b in range(210, 225)):
-        player_1.speed = 0
-    else:
-        player_1.speed =1
+    if (r in range(185,195)) and (g in range(195,205)) and (b in range(210, 225)) and press[pygame.K_w]:
+        player_1.y += 3
+    elif (r in range(116,119)) and (g in range(57,60)) and (b in range(52, 56)) and press[pygame.K_s]:
+        #player_1.kill()
+        player_1.y -= 3
+    elif ((r in range(116,119)) or (r in range(60-66))) and ((g in range(57,60)) or (g in range (33-43))) and ((b in range(52, 56)) or (b in range(44-50))) and press[pygame.K_d]:
+        player_1.x -= 3
+    elif ((r in range(116,119)) or (r in range(60-66))) and ((g in range(57,60)) or (g in range (33-43))) and ((b in range(52, 56)) or (b in range(44-50))) and press[pygame.K_a]:
+        player_1.x += 3
+       
+
+
 
     #draw character
     player_group.draw(screen)
