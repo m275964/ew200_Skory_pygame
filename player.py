@@ -5,14 +5,17 @@ TARGET_COLOR = (136, 153, 178)
 class Player(pygame.sprite.Sprite):
 
 
-    def __init__(self, screen, x, y, WIDTH, HEIGHT):
+    def __init__(self, screen, x, y, WIDTH, HEIGHT, type='human'):
         pygame.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
         self.speed = 1
-
+        self.type = type
         # Character sprite
-        self.orig_image = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0085.png')
+        if type == 'human':
+            self.orig_image = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0085.png')
+        elif type == 'wizard':
+            self.orig_image = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0111.png')
         self.image = self.orig_image
         self.rect = self.image.get_rect()
         self.length = self.rect.height
@@ -43,7 +46,8 @@ class Player(pygame.sprite.Sprite):
 
 
     def border(self):
-        
+        if self.type != 'human':
+            return
 
         if self.x < 10:
             self.x = 10
@@ -57,8 +61,16 @@ class Player(pygame.sprite.Sprite):
 
 
         return self.x, self.y
+    
+    def track_player(self):
+        pass
 
     def update(self):
+        if self.type == 'human':
+            self.check_keys()
+        else:
+            self.track_player()
+
 
         self.rect = self.image.get_rect(center= (self.x, self.y))
         self.border()
