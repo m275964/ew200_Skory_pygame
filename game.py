@@ -45,13 +45,14 @@ while running:
             running = False
 
 
-
     # RENDER YOUR GAME HERE
 
     #update character
     player_1.check_keys()
     player_group.update()
     enemy_group.update()
+
+    enemy.track_player(target_x = player_1.x, target_y= player_1.y)
 
     #blit the background to the screen
     screen.blit(background, (0,0))

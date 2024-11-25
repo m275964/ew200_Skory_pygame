@@ -68,8 +68,7 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         if self.type == 'human':
             self.check_keys()
-        else:
-            self.track_player()
+
 
 
         self.rect = self.image.get_rect(center= (self.x, self.y))
