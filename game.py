@@ -19,7 +19,7 @@ clock = pygame.time.Clock()
 running = True
 
 #get background
-background = build_background(WIDTH, HEIGHT)
+background, wall_rect = build_background(WIDTH, HEIGHT)
 
 #make a group
 player_group = pygame.sprite.Group()
@@ -27,8 +27,8 @@ enemy_group = pygame.sprite.Group()
 all_sprite_group = pygame.sprite.Group()
 
 #make a chacrter
-player_1 = Player(screen, 400, 256, WIDTH, HEIGHT)
-enemy = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, 'wizard')
+player_1 = Player(screen, 400, 256, WIDTH, HEIGHT, wall_rect)
+enemy = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
 
 
 #add player to group

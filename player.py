@@ -5,7 +5,7 @@ TARGET_COLOR = (136, 153, 178)
 class Player(pygame.sprite.Sprite):
 
 
-    def __init__(self, screen, x, y, WIDTH, HEIGHT, type='human'):
+    def __init__(self, screen, x, y, WIDTH, HEIGHT, wall_rect, type='human'):
         pygame.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
@@ -25,24 +25,35 @@ class Player(pygame.sprite.Sprite):
         self.max_speed = 3
         self.reverse_time = pygame.time.get_ticks()
         self.screen = screen
-        self.background = build_background(self.screen_w, self.screen_h)
+        self.wall_rect = wall_rect
 
 
     
-    def check_keys(self, collision = False):
+    def check_keys(self):
         press = pygame.key.get_pressed()
 
+    # New positions based on movement
+        new_x = self.x
+        new_y = self.y
+
         if press[pygame.K_w]:
-            self.y -= self.speed
+            new_y -= self.speed
         if press[pygame.K_s]:
-            self.y += self.speed
-
-
+            new_y += self.speed
         if press[pygame.K_a]:
-            self.x -= self.speed
+            new_x -= self.speed
         if press[pygame.K_d]:
-            self.x += self.speed
+            new_x += self.speed
 
+    # Check for collision with walls or tracks
+        new_rect = pygame.Rect(new_x, new_y, self.rect.width, self.rect.height)
+
+    # If the new position collides with any of the wall_rects, don't move
+        if not any(new_rect.colliderect(wall) for wall in self.wall_rect):
+            self.x = new_x
+            self.y = new_y
+
+        self.rect = self.image.get_rect(center=(self.x, self.y))
 
 
     def border(self):

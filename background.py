@@ -43,45 +43,52 @@ def build_background(WIDTH, HEIGHT):
             #Back of Castles
             if ((x == (8*TILE_SIZE)) or (x == (24*TILE_SIZE))) and y == 0:
                 background.blit(LEFT_BACK_CORNER, (x, y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
             elif ((x > (8*TILE_SIZE) and x < (16*TILE_SIZE)) or (x > (24*TILE_SIZE) and x < (32*TILE_SIZE))) and y == 0:
                 background.blit(BACK_WALL, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
             elif ((x == (16*TILE_SIZE)) or (x == (32*TILE_SIZE))) and y == 0:
                 background.blit(RIGHT_BACK_CORNER, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
 
             #Side of Castles
             elif ((x == (8*TILE_SIZE)) or (x == (24*TILE_SIZE))) and (y > 0 and y < (8*TILE_SIZE)):
                 background.blit(LEFT_WALL, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
             elif ((x > (8*TILE_SIZE) and x < (16*TILE_SIZE)) or (x > (24*TILE_SIZE) and x < (32*TILE_SIZE))) and (y > 0 and y < (8*TILE_SIZE)):
                 background.blit(ROOF, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
             elif ((x == (16*TILE_SIZE)) or (x == (32*TILE_SIZE))) and (y > 0 and y < (8*TILE_SIZE)):
                 background.blit(RIGHT_WALL, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
 
             #Front of castles
             elif ((x == (8*TILE_SIZE)) or (x == (24*TILE_SIZE))) and y == (8*TILE_SIZE):
                 background.blit(LEFT_FRONT_CORNER, (x, y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
             elif ((x > (8*TILE_SIZE) and x < (16*TILE_SIZE)) or (x > (24*TILE_SIZE) and x < (32*TILE_SIZE))) and y == (8*TILE_SIZE):
-                rect = TOP_WALL.get_rect()
-                rect.topleft = (x,y)
-                # add the rect to our rect list
-                wall_rects.append(rect)
-                # blit the wall
-                background.blit(TOP_WALL, rect)
 
-                #background.blit(TOP_WALL, (x,y))
+                background.blit(TOP_WALL, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
+
             elif ((x == (16*TILE_SIZE)) or (x == (32*TILE_SIZE))) and y == (8*TILE_SIZE):
                 background.blit(RIGHT_FRONT_CORNER, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
 
             #TRAIN TRACKS
             if ((x >= 0) and (x < 24*TILE_SIZE)) and (y== 24*TILE_SIZE):
                 background.blit(HOR_TRACK, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
             elif ((x == 24*TILE_SIZE) and (y==24*TILE_SIZE)):
                 background.blit(RIGHT_TOP_CORNER_TRACK, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
             elif ((x == 24*TILE_SIZE) and (y>24*TILE_SIZE)):
                 background.blit(VER_TRACK, (x,y))
+                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
             
             
 
-    return background
+    return background, wall_rects
 
 
 

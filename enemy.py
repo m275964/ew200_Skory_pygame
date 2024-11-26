@@ -4,8 +4,8 @@ from player import Player
 
 
 class Enemy(Player):
-    def __init__(self, player, screen, x, y, WIDTH, HEIGHT, type='wizard'):
-        super().__init__(screen, x, y, WIDTH, HEIGHT, type)
+    def __init__(self, player, screen, x, y, WIDTH, HEIGHT, wall_rect, type='wizard'):
+        super().__init__(screen, x, y, WIDTH, HEIGHT, wall_rect, type)
         self.player = player
         self.speed = 1
 
