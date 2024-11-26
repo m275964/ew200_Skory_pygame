@@ -78,13 +78,13 @@ def build_background(WIDTH, HEIGHT):
             #TRAIN TRACKS
             if ((x >= 0) and (x < 24*TILE_SIZE)) and (y== 24*TILE_SIZE):
                 background.blit(HOR_TRACK, (x,y))
-                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
+
             elif ((x == 24*TILE_SIZE) and (y==24*TILE_SIZE)):
                 background.blit(RIGHT_TOP_CORNER_TRACK, (x,y))
-                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
+
             elif ((x == 24*TILE_SIZE) and (y>24*TILE_SIZE)):
                 background.blit(VER_TRACK, (x,y))
-                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
+  
             
             
 
