@@ -19,4 +19,3 @@ class Enemy(Player):
         if distance > 0:
             self.x += self.speed * (dx/distance)
             self.y += self.speed * (dy / distance)
-

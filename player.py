@@ -73,4 +73,3 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(center= (self.x, self.y))
         self.border()
-
