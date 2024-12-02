@@ -51,8 +51,9 @@ enemy_3 = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HE
 #add player to group
 player_group.add(player_1)
 enemy_group.add(enemy)
+enemy_group.add(enemy_2)
 
-#Text for Score
+#Text for Scoress
 Score = 0000
 start_time = pygame.time.get_ticks()
 font = pygame.font.SysFont('Verdana', 20, bold = True)
@@ -77,6 +78,7 @@ while running:
     enemy_group.update()
 
     enemy.track_player(target_x = player_1.x, target_y= player_1.y)
+    enemy_2.track_player(target_x = player_1.x, target_y= player_1.y)
 
     #blit the background to the screen
     screen.blit(background, (0,0))
@@ -98,7 +100,7 @@ while running:
     player_group.draw(screen)
     enemy_group.draw(screen)
 
-    if pygame.sprite.collide_rect(player_1, enemy):
+    if pygame.sprite.collide_rect(player_1, enemy) or pygame.sprite.collide_rect(player_1, enemy_2):
         player_alive = False
         player_1.kill()
         Score_text = font.render(f"YOU HAVE DIED, YOUR FINAL SCORE: {Score}", True, (0, 0, 0))

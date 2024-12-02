@@ -1,5 +1,6 @@
 import pygame
 from background import build_background
+import arrow
 
 TARGET_COLOR = (136, 153, 178)
 class Player(pygame.sprite.Sprite):
