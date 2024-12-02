@@ -52,7 +52,14 @@ enemy_3 = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HE
 player_group.add(player_1)
 enemy_group.add(enemy)
 
+#Text for Score
+Score = 0000
+start_time = pygame.time.get_ticks()
+font = pygame.font.SysFont('Verdana', 20, bold = True)
+Score_text = font.render(f"Score: {Score}", True, (0, 0, 0)) 
 
+#status of player
+player_alive = True
 
 while running:
     # poll for events
@@ -74,6 +81,14 @@ while running:
     #blit the background to the screen
     screen.blit(background, (0,0))
 
+
+    current_time = pygame.time.get_ticks()
+    if player_alive:
+        if (current_time - start_time) >= 100:  # 1000 milliseconds = 1 second
+            Score += 1
+            start_time = current_time
+        Score_text = font.render(f"Score: {Score}", True, (0, 0, 0))
+        screen.blit(Score_text, (0, 0))
   
        
 
@@ -84,7 +99,10 @@ while running:
     enemy_group.draw(screen)
 
     if pygame.sprite.collide_rect(player_1, enemy):
+        player_alive = False
         player_1.kill()
+        Score_text = font.render(f"YOU HAVE DIED, YOUR FINAL SCORE: {Score}", True, (0, 0, 0))
+        screen.blit(Score_text, (WIDTH // 2 - Score_text.get_width() // 2, HEIGHT // 3))
 
     # flip() the display to put your work on screen
     pygame.display.flip()

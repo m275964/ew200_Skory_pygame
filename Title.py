@@ -1,6 +1,5 @@
 import pygame
 from background import build_background
-import random
 
 
 clock = pygame.time.Clock()
