@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.type = type
         # Character sprite
         if type == 'human':
-            self.orig_image = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0085.png')
+            self.orig_image = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0096.png')
         elif type == 'wizard':
             self.orig_image = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0111.png')
         self.image = self.orig_image
