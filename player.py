@@ -32,6 +32,8 @@ class Player(pygame.sprite.Sprite):
         self.arrow_group = pygame.sprite.Group()
         self.direction = (1, 0)
 
+        self.last_shot_time = pygame.time.get_ticks()
+
     
     def check_keys(self):
         press = pygame.key.get_pressed()
@@ -88,8 +90,14 @@ class Player(pygame.sprite.Sprite):
 
     def shoot(self):
         # Spawn the projectile at the player's position
-        arrow = Arrow(self.x, self.y, self.direction, 5, self.screen)
-        self.arrow_group.add(arrow)
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_shot_time >= 500:
+            
+            arrow = Arrow(self.x, self.y, self.direction, 5, self.screen)
+            self.arrow_group.add(arrow)
+            self.last_shot_time = current_time
+
+
 
     def update(self):
         if self.type == 'human':
