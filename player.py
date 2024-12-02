@@ -45,7 +45,7 @@ class Player(pygame.sprite.Sprite):
         if press[pygame.K_d]:
             new_x += self.speed
 
-    # Check for collision with walls or tracks
+    # Check for collision with walls
         new_rect = pygame.Rect(new_x, new_y, self.rect.width, self.rect.height)
 
     # If the new position collides with any of the wall_rects, don't move
