@@ -1,13 +1,22 @@
 # Example file showing a basic pygame "game loop"
 import pygame
+
+
 from background import build_background
 from player import Player
 from enemy import Enemy
 import random
 from Title import display_title_screen
 
+
 # pygame setup
 pygame.init()
+pygame.mixer.init()
+
+#audio 
+music = pygame.mixer.Sound('audio/echoofsadness.mp3')
+music.set_volume(0.5)
+music.play(-1)
 
 #border of the screen
 WIDTH = 800
@@ -21,7 +30,6 @@ running = True
 
 #get background
 background, wall_rect = build_background(WIDTH, HEIGHT)
-
 
 
 display_title_screen(screen, WIDTH, HEIGHT)
