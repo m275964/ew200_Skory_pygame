@@ -35,27 +35,27 @@ class Player(pygame.sprite.Sprite):
         self.last_shot_time = pygame.time.get_ticks()
 
     
-    def check_keys(self):
+    def check_keys(self, status = True):
         press = pygame.key.get_pressed()
 
     # New positions based on movement
         new_x = self.x
         new_y = self.y
-
-        if press[pygame.K_w]:
-            new_y -= self.speed
-            self.direction = (0, -1)  # Up
-        if press[pygame.K_s]:
-            new_y += self.speed
-            self.direction = (0, 1)  # Down
-        if press[pygame.K_a]:
-            new_x -= self.speed
-            self.direction = (-1, 0)  # Left
-        if press[pygame.K_d]:
-            new_x += self.speed
-            self.direction = (1, 0)  # Right
-        if press[pygame.K_SPACE]:
-            self.shoot()
+        if status:
+            if press[pygame.K_w]:
+                new_y -= self.speed
+                self.direction = (0, -1)  # Up
+            if press[pygame.K_s]:
+                new_y += self.speed
+                self.direction = (0, 1)  # Down
+            if press[pygame.K_a]:
+                new_x -= self.speed
+                self.direction = (-1, 0)  # Left
+            if press[pygame.K_d]:
+                new_x += self.speed
+                self.direction = (1, 0)  # Right
+            if press[pygame.K_SPACE]:
+                self.shoot()
 
     # Check for collision with walls
         new_rect = pygame.Rect(new_x, new_y, self.rect.width, self.rect.height)

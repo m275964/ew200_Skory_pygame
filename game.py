@@ -75,7 +75,8 @@ while running:
     # RENDER YOUR GAME HERE
 
     #update character
-    player_1.check_keys()
+    if player_alive == False:
+        player_1.check_keys(False)
     player_group.update()
     enemy_group.update()
 
@@ -96,7 +97,8 @@ while running:
   
     player_1.update()
     for arrow in player_1.arrow_group:
-        arrow.check_collision(enemy_group)
+        score_increase = arrow.check_collision(enemy_group, Score)
+        Score = score_increase
 
     player_1.arrow_group.draw(screen)
     #draw character
