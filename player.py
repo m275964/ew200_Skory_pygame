@@ -1,6 +1,6 @@
 import pygame
 from background import build_background
-import arrow
+from arrow import Arrow
 
 TARGET_COLOR = (136, 153, 178)
 class Player(pygame.sprite.Sprite):
@@ -27,7 +27,10 @@ class Player(pygame.sprite.Sprite):
         self.reverse_time = pygame.time.get_ticks()
         self.screen = screen
         self.wall_rect = wall_rect
+        
 
+        self.arrow_group = pygame.sprite.Group()
+        self.direction = (1, 0)
 
     
     def check_keys(self):
@@ -39,12 +42,18 @@ class Player(pygame.sprite.Sprite):
 
         if press[pygame.K_w]:
             new_y -= self.speed
+            self.direction = (0, -1)  # Up
         if press[pygame.K_s]:
             new_y += self.speed
+            self.direction = (0, 1)  # Down
         if press[pygame.K_a]:
             new_x -= self.speed
+            self.direction = (-1, 0)  # Left
         if press[pygame.K_d]:
             new_x += self.speed
+            self.direction = (1, 0)  # Right
+        if press[pygame.K_SPACE]:
+            self.shoot()
 
     # Check for collision with walls
         new_rect = pygame.Rect(new_x, new_y, self.rect.width, self.rect.height)
@@ -77,11 +86,16 @@ class Player(pygame.sprite.Sprite):
     def track_player(self):
         pass
 
+    def shoot(self):
+        # Spawn the projectile at the player's position
+        arrow = Arrow(self.x, self.y, self.direction, 5, self.screen)
+        self.arrow_group.add(arrow)
+
     def update(self):
         if self.type == 'human':
             self.check_keys()
 
 
-
+        self.arrow_group.update()
         self.rect = self.image.get_rect(center= (self.x, self.y))
         self.border()

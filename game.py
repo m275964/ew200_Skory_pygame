@@ -8,6 +8,8 @@ from enemy import Enemy
 import random
 from Title import display_title_screen
 
+from arrow import Arrow
+
 
 # pygame setup
 pygame.init()
@@ -92,12 +94,14 @@ while running:
         Score_text = font.render(f"Score: {Score}", True, (0, 0, 0))
         screen.blit(Score_text, (0, 0))
   
-       
+    player_1.update()
+    for arrow in player_1.arrow_group:
+        arrow.check_collision(enemy_group)
 
-
-
+    player_1.arrow_group.draw(screen)
     #draw character
     player_group.draw(screen)
+
     enemy_group.draw(screen)
 
     if pygame.sprite.collide_rect(player_1, enemy) or pygame.sprite.collide_rect(player_1, enemy_2):
