@@ -56,8 +56,9 @@ enemy_group.add(enemy)
 enemy_group.add(enemy_2)
 
 #Text for Scoress
-Score = 0000
+Score = 0
 start_time = pygame.time.get_ticks()
+enemy_spawn_time = pygame.time.get_ticks()
 font = pygame.font.SysFont('Verdana', 20, bold = True)
 Score_text = font.render(f"Score: {Score}", True, (0, 0, 0)) 
 
@@ -80,8 +81,8 @@ while running:
     player_group.update()
     enemy_group.update()
 
-    enemy.track_player(target_x = player_1.x, target_y= player_1.y)
-    enemy_2.track_player(target_x = player_1.x, target_y= player_1.y)
+    for enemy in enemy_group:
+        enemy.track_player(target_x=player_1.x, target_y=player_1.y)
 
     #blit the background to the screen
     screen.blit(background, (0,0))
@@ -97,8 +98,8 @@ while running:
   
     player_1.update()
     for arrow in player_1.arrow_group:
-        score_increase = arrow.check_collision(enemy_group, Score)
-        Score = score_increase
+        score_increase = arrow.check_collision(enemy_group)
+        Score += score_increase 
 
     player_1.arrow_group.draw(screen)
     #draw character
@@ -106,11 +107,18 @@ while running:
 
     enemy_group.draw(screen)
 
-    if pygame.sprite.collide_rect(player_1, enemy) or pygame.sprite.collide_rect(player_1, enemy_2):
-        player_alive = False
-        player_1.kill()
-        Score_text = font.render(f"YOU HAVE DIED, YOUR FINAL SCORE: {Score}", True, (0, 0, 0))
-        screen.blit(Score_text, (WIDTH // 2 - Score_text.get_width() // 2, HEIGHT // 3))
+    for enemy in enemy_group:
+        if pygame.sprite.collide_rect(player_1, enemy):
+            player_alive = False
+            player_1.kill()
+            Score_text = font.render(f"YOU HAVE DIED, YOUR FINAL SCORE: {Score}", True, (0, 0, 0))
+            screen.blit(Score_text, (WIDTH // 2 - Score_text.get_width() // 2, HEIGHT // 3))
+
+    if current_time - enemy_spawn_time >= 20000:  # 20000 milliseconds = 20 seconds
+        # Spawn a new enemy at a random position
+        new_enemy = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
+        enemy_group.add(new_enemy)  # Add the new enemy to the enemy group
+        enemy_spawn_time = current_time  # Reset the spawn timer
 
     # flip() the display to put your work on screen
     pygame.display.flip()
