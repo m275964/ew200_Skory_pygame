@@ -4,7 +4,8 @@ from background import build_background
 from player import Player
 from enemy import Enemy
 import random
-   
+from Title import display_title_screen
+
 # pygame setup
 pygame.init()
 
@@ -21,6 +22,12 @@ running = True
 #get background
 background, wall_rect = build_background(WIDTH, HEIGHT)
 
+
+
+display_title_screen(screen, WIDTH, HEIGHT)
+
+# Now start the actual game loop
+
 #make a group
 player_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
@@ -29,6 +36,8 @@ all_sprite_group = pygame.sprite.Group()
 #make a chacrter
 player_1 = Player(screen, 400, 256, WIDTH, HEIGHT, wall_rect)
 enemy = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
+enemy_2 = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
+enemy_3 = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
 
 
 #add player to group

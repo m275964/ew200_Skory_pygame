@@ -57,7 +57,7 @@ def build_background(WIDTH, HEIGHT):
                 wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
             elif ((x > (8*TILE_SIZE) and x < (16*TILE_SIZE)) or (x > (24*TILE_SIZE) and x < (32*TILE_SIZE))) and (y > 0 and y < (8*TILE_SIZE)):
                 background.blit(ROOF, (x,y))
-                wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
+
             elif ((x == (16*TILE_SIZE)) or (x == (32*TILE_SIZE))) and (y > 0 and y < (8*TILE_SIZE)):
                 background.blit(RIGHT_WALL, (x,y))
                 wall_rects.append(pygame.Rect(x, y, TILE_SIZE, TILE_SIZE))
