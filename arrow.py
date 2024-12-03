@@ -39,6 +39,7 @@ class Arrow(pygame.sprite.Sprite):
         for enemy in enemy_group:
             if pygame.sprite.collide_rect(self, enemy):  # Check if the arrow collides with the enemy
                 enemy.kill()  # Remove the enemy from the game
+                self.kill() #removes arrow from the game
                 score_increase += 100  # Increase the score by 1 for each enemy hit
                 break  # Avoid double-counting the same collision (if the arrow hits multiple enemies at once)
         return score_increase

@@ -74,10 +74,13 @@ while running:
 
 
     # RENDER YOUR GAME HERE
+    
 
     #update character
-    if player_alive == False:
-        player_1.check_keys(False)
+    if player_alive:
+        player_1.check_keys(True)  # Allow movement and shooting
+    else:
+        player_1.check_keys(False)  # Disable movement and shooting when dead
     player_group.update()
     enemy_group.update()
 
@@ -110,11 +113,11 @@ while running:
     for enemy in enemy_group:
         if pygame.sprite.collide_rect(player_1, enemy):
             player_alive = False
-            player_1.kill()
+            player_1.kill() #kills player
             Score_text = font.render(f"YOU HAVE DIED, YOUR FINAL SCORE: {Score}", True, (0, 0, 0))
             screen.blit(Score_text, (WIDTH // 2 - Score_text.get_width() // 2, HEIGHT // 3))
 
-    if current_time - enemy_spawn_time >= 20000:  # 20000 milliseconds = 20 seconds
+    if current_time - enemy_spawn_time >= 1000:  # 3000 milliseconds = 3 seconds
         # Spawn a new enemy at a random position
         new_enemy = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
         enemy_group.add(new_enemy)  # Add the new enemy to the enemy group

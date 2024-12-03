@@ -1,6 +1,7 @@
 import pygame
 from background import build_background
 from arrow import Arrow
+player_alive = True
 
 TARGET_COLOR = (136, 153, 178)
 class Player(pygame.sprite.Sprite):
@@ -35,37 +36,41 @@ class Player(pygame.sprite.Sprite):
         self.last_shot_time = pygame.time.get_ticks()
 
     
-    def check_keys(self, status = True):
+    def check_keys(self, status=True):
+        if not status:  # If the player is dead, return immediately
+            return
+
         press = pygame.key.get_pressed()
 
-    # New positions based on movement
+        # New positions based on movement
         new_x = self.x
         new_y = self.y
-        if status:
-            if press[pygame.K_w]:
-                new_y -= self.speed
-                self.direction = (0, -1)  # Up
-            if press[pygame.K_s]:
-                new_y += self.speed
-                self.direction = (0, 1)  # Down
-            if press[pygame.K_a]:
-                new_x -= self.speed
-                self.direction = (-1, 0)  # Left
-            if press[pygame.K_d]:
-                new_x += self.speed
-                self.direction = (1, 0)  # Right
-            if press[pygame.K_SPACE]:
-                self.shoot()
 
-    # Check for collision with walls
+        if press[pygame.K_w]:
+            new_y -= self.speed
+            self.direction = (0, -1)  # Up
+        if press[pygame.K_s]:
+            new_y += self.speed
+            self.direction = (0, 1)  # Down
+        if press[pygame.K_a]:
+            new_x -= self.speed
+            self.direction = (-1, 0)  # Left
+        if press[pygame.K_d]:
+            new_x += self.speed
+            self.direction = (1, 0)  # Right
+        if press[pygame.K_SPACE]:
+            self.shoot()
+
+        # Check for collision with walls
         new_rect = pygame.Rect(new_x, new_y, self.rect.width, self.rect.height)
 
-    # If the new position collides with any of the wall_rects, don't move
+        # If the new position collides with any of the wall_rects, don't move
         if not any(new_rect.colliderect(wall) for wall in self.wall_rect):
             self.x = new_x
             self.y = new_y
 
         self.rect = self.image.get_rect(center=(self.x, self.y))
+
 
 
     def border(self):
@@ -89,6 +94,8 @@ class Player(pygame.sprite.Sprite):
         pass
 
     def shoot(self):
+        if not player_alive:
+            return
         # Spawn the projectile at the player's position
         current_time = pygame.time.get_ticks()
         if current_time - self.last_shot_time >= 500:
