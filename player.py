@@ -36,8 +36,9 @@ class Player(pygame.sprite.Sprite):
         self.last_shot_time = pygame.time.get_ticks()
 
     
-    def check_keys(self):
-
+    def check_keys(self, player_alive):
+        if not player_alive:
+            return
 
 
         press = pygame.key.get_pressed()
@@ -59,7 +60,7 @@ class Player(pygame.sprite.Sprite):
             new_x += self.speed
             self.direction = (1, 0)  # Right
         if press[pygame.K_SPACE]:
-            self.shoot()
+            self.shoot(player_alive)
 
         # Check for collision with walls
         new_rect = pygame.Rect(new_x, new_y, self.rect.width, self.rect.height)
@@ -93,7 +94,9 @@ class Player(pygame.sprite.Sprite):
     def track_player(self):
         pass
 
-    def shoot(self):
+    def shoot(self, player_alive):
+        if not player_alive:
+            return
 
         # Spawn the projectile at the player's position
         current_time = pygame.time.get_ticks()
@@ -105,9 +108,9 @@ class Player(pygame.sprite.Sprite):
 
 
 
-    def update(self):
+    def update(self, player_alive):
         if self.type == 'human':
-            self.check_keys()
+            self.check_keys(player_alive)
 
 
         self.arrow_group.update()

@@ -1,4 +1,3 @@
-# Example file showing a basic pygame "game loop"
 import pygame
 
 
@@ -77,9 +76,9 @@ while running:
 
     #update character
     if player_alive:
-        player_1.check_keys()  # Allow movement and shooting
-    player_group.update()
-    enemy_group.update()
+        player_1.check_keys(player_alive)  # Allow movement and shooting
+    player_group.update(player_alive)
+    enemy_group.update(player_alive)
 
     for enemy in enemy_group:
         enemy.track_player(target_x=player_1.x, target_y=player_1.y)
@@ -96,7 +95,7 @@ while running:
         Score_text = font.render(f"Score: {Score}", True, (0, 0, 0))
         screen.blit(Score_text, (0, 0))
   
-    player_1.update()
+    player_1.update(player_alive)
     for arrow in player_1.arrow_group:
         score_increase = arrow.check_collision(enemy_group)
         Score += score_increase 
@@ -113,8 +112,9 @@ while running:
             player_1.kill() #kills player
             Score_text = font.render(f"YOU HAVE DIED, YOUR FINAL SCORE: {Score}", True, (0, 0, 0))
             screen.blit(Score_text, (WIDTH // 2 - Score_text.get_width() // 2, HEIGHT // 3))
+            break
 
-    if current_time - enemy_spawn_time >= 1000:  # 1000 milliseconds = 1 seconds
+    if current_time - enemy_spawn_time >= 1000 and player_alive:  # 1000 milliseconds = 1 seconds
         # Spawn a new enemy at a random position
         new_enemy = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
         enemy_group.add(new_enemy)  # Add the new enemy to the enemy group
