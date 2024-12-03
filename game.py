@@ -45,8 +45,8 @@ all_sprite_group = pygame.sprite.Group()
 
 #make a character
 player_1 = Player(screen, 400, 256, WIDTH, HEIGHT, wall_rect)
-enemy = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
-enemy_2 = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
+enemy = Enemy(player_1, screen, random.randint(0, 100), random.randint(0, 312), WIDTH, HEIGHT, wall_rect, 'wizard')
+enemy_2 = Enemy(player_1, screen, random.randint(0, 100), random.randint(0, 312), WIDTH, HEIGHT, wall_rect, 'wizard')
 
 
 #add player to group
@@ -119,7 +119,7 @@ while running:
     #Enemy Spawner
     if current_time - enemy_spawn_time >= 1000 and player_alive:  # 1000 milliseconds = 1 seconds
         # Spawn a new enemy at a random position
-        new_enemy = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
+        new_enemy = Enemy(player_1, screen, random.randint(0, 100), random.randint(0, 312), WIDTH, HEIGHT, wall_rect, 'wizard')
         enemy_group.add(new_enemy)  # Add the new enemy to the enemy group
         enemy_spawn_time = current_time  # Reset the spawn timer
 
