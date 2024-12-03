@@ -1,10 +1,13 @@
+#Basic imports
 import pygame
 import math
+#Entities imports
 from player import Player
 
 
 class Enemy(Player):
     def __init__(self, player, screen, x, y, WIDTH, HEIGHT, wall_rect, type='wizard'):
+        # Initializes all previous attributes from the Player class
         super().__init__(screen, x, y, WIDTH, HEIGHT, wall_rect, type)
         self.player = player
         self.speed = 1

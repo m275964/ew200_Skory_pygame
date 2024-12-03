@@ -1,9 +1,11 @@
+#Basic imports
 import pygame
+#Background imports
 from background import build_background
+#Entities imports
 from arrow import Arrow
 
-
-TARGET_COLOR = (136, 153, 178)
+#player class
 class Player(pygame.sprite.Sprite):
 
 
@@ -13,6 +15,8 @@ class Player(pygame.sprite.Sprite):
         self.y = y
         self.speed = 1
         self.type = type
+        self.max_speed = 3
+        self.direction = (1, 0)
         # Character sprite
         if type == 'human':
             self.orig_image = pygame.image.load('kenney_tiny-dungeon/Tiles/tile_0096.png')
@@ -22,31 +26,27 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.length = self.rect.height
         self.rect.center = (self.x, self.y)
+        #screen attributes
         self.screen_w = WIDTH
         self.screen_h = HEIGHT
-        self.max_speed = 3
         self.reverse_time = pygame.time.get_ticks()
         self.screen = screen
         self.wall_rect = wall_rect
-        
-
+        #arrow attributes
         self.arrow_group = pygame.sprite.Group()
-        self.direction = (1, 0)
-
         self.last_shot_time = pygame.time.get_ticks()
 
-    
+    #allows for player movement
     def check_keys(self, player_alive):
         if not player_alive:
             return
-
-
-        press = pygame.key.get_pressed()
+        press = pygame.key.get_pressed() # Press function
 
         # New positions based on movement
         new_x = self.x
         new_y = self.y
 
+        #movement arguements
         if press[pygame.K_w]:
             new_y -= self.speed
             self.direction = (0, -1)  # Up
@@ -73,7 +73,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(self.x, self.y))
 
 
-
+    #border functions
     def border(self):
         if self.type != 'human':
             return
@@ -91,17 +91,16 @@ class Player(pygame.sprite.Sprite):
 
         return self.x, self.y
     
+    # Only applies to the enemy class
     def track_player(self):
         pass
 
+    # Spawn the arrow at the player's position
     def shoot(self, player_alive):
         if not player_alive:
             return
-
-        # Spawn the projectile at the player's position
         current_time = pygame.time.get_ticks()
-        if current_time - self.last_shot_time >= 500:
-            
+        if current_time - self.last_shot_time >= 500: # 500 miliseconds, .5 seconds. Gives a delay between every shot
             arrow = Arrow(self.x, self.y, self.direction, 5, self.screen)
             self.arrow_group.add(arrow)
             self.last_shot_time = current_time
