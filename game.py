@@ -45,9 +45,8 @@ all_sprite_group = pygame.sprite.Group()
 
 #make a chacrter
 player_1 = Player(screen, 400, 256, WIDTH, HEIGHT, wall_rect)
-enemy = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
-enemy_2 = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
-enemy_3 = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
+enemy = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
+enemy_2 = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
 
 
 #add player to group
@@ -78,9 +77,7 @@ while running:
 
     #update character
     if player_alive:
-        player_1.check_keys(True)  # Allow movement and shooting
-    else:
-        player_1.check_keys(False)  # Disable movement and shooting when dead
+        player_1.check_keys()  # Allow movement and shooting
     player_group.update()
     enemy_group.update()
 
@@ -106,8 +103,8 @@ while running:
 
     player_1.arrow_group.draw(screen)
     #draw character
-    player_group.draw(screen)
 
+    player_group.draw(screen)
     enemy_group.draw(screen)
 
     for enemy in enemy_group:
@@ -117,9 +114,9 @@ while running:
             Score_text = font.render(f"YOU HAVE DIED, YOUR FINAL SCORE: {Score}", True, (0, 0, 0))
             screen.blit(Score_text, (WIDTH // 2 - Score_text.get_width() // 2, HEIGHT // 3))
 
-    if current_time - enemy_spawn_time >= 1000:  # 3000 milliseconds = 3 seconds
+    if current_time - enemy_spawn_time >= 1000:  # 1000 milliseconds = 1 seconds
         # Spawn a new enemy at a random position
-        new_enemy = Enemy(player_1, screen, random.randint(0, WIDTH), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
+        new_enemy = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
         enemy_group.add(new_enemy)  # Add the new enemy to the enemy group
         enemy_spawn_time = current_time  # Reset the spawn timer
 

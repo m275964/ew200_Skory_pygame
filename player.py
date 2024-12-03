@@ -1,7 +1,7 @@
 import pygame
 from background import build_background
 from arrow import Arrow
-player_alive = True
+
 
 TARGET_COLOR = (136, 153, 178)
 class Player(pygame.sprite.Sprite):
@@ -36,9 +36,9 @@ class Player(pygame.sprite.Sprite):
         self.last_shot_time = pygame.time.get_ticks()
 
     
-    def check_keys(self, status=True):
-        if not status:  # If the player is dead, return immediately
-            return
+    def check_keys(self):
+
+
 
         press = pygame.key.get_pressed()
 
@@ -94,8 +94,7 @@ class Player(pygame.sprite.Sprite):
         pass
 
     def shoot(self):
-        if not player_alive:
-            return
+
         # Spawn the projectile at the player's position
         current_time = pygame.time.get_ticks()
         if current_time - self.last_shot_time >= 500:
