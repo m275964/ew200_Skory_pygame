@@ -1,12 +1,14 @@
+#basic imports
 import pygame
-
-
-from background import build_background
-from player import Player
-from enemy import Enemy
 import random
+
+#background imports
+from background import build_background
 from Title import display_title_screen
 
+#enities imports
+from player import Player
+from enemy import Enemy
 from arrow import Arrow
 
 
@@ -23,8 +25,7 @@ music.play(-1)
 WIDTH = 800
 HEIGHT = 512
 
-# 50 pixels tall, 32 pixels wide
-
+#screen set up
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 running = True
@@ -32,7 +33,7 @@ running = True
 #get background
 background, wall_rect = build_background(WIDTH, HEIGHT)
 
-
+#Title screen
 display_title_screen(screen, WIDTH, HEIGHT)
 
 # Now start the actual game loop
@@ -42,7 +43,7 @@ player_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
 all_sprite_group = pygame.sprite.Group()
 
-#make a chacrter
+#make a character
 player_1 = Player(screen, 400, 256, WIDTH, HEIGHT, wall_rect)
 enemy = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
 enemy_2 = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')
@@ -53,7 +54,7 @@ player_group.add(player_1)
 enemy_group.add(enemy)
 enemy_group.add(enemy_2)
 
-#Text for Scoress
+#Text for Scores
 Score = 0
 start_time = pygame.time.get_ticks()
 enemy_spawn_time = pygame.time.get_ticks()
@@ -63,6 +64,7 @@ Score_text = font.render(f"Score: {Score}", True, (0, 0, 0))
 #status of player
 player_alive = True
 
+####################################################### Actual Game #######################################################
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -71,22 +73,20 @@ while running:
             running = False
 
 
-    # RENDER YOUR GAME HERE
-    
-
-    #update character
+    #update enetities 
     if player_alive:
         player_1.check_keys(player_alive)  # Allow movement and shooting
     player_group.update(player_alive)
     enemy_group.update(player_alive)
 
+    #tracks player
     for enemy in enemy_group:
         enemy.track_player(target_x=player_1.x, target_y=player_1.y)
 
     #blit the background to the screen
     screen.blit(background, (0,0))
 
-
+    #Scoring system
     current_time = pygame.time.get_ticks()
     if player_alive:
         if (current_time - start_time) >= 100:  # 1000 milliseconds = 1 second
@@ -95,17 +95,19 @@ while running:
         Score_text = font.render(f"Score: {Score}", True, (0, 0, 0))
         screen.blit(Score_text, (0, 0))
   
+    #Arrow abilities 
     player_1.update(player_alive)
     for arrow in player_1.arrow_group:
-        score_increase = arrow.check_collision(enemy_group)
-        Score += score_increase 
-
+        score_increase = arrow.check_collision(enemy_group) #Checks if arrow hit enemy
+        Score += score_increase #increases score
     player_1.arrow_group.draw(screen)
-    #draw character
 
+
+    #draw character
     player_group.draw(screen)
     enemy_group.draw(screen)
 
+    #Death code
     for enemy in enemy_group:
         if pygame.sprite.collide_rect(player_1, enemy):
             player_alive = False
@@ -114,6 +116,7 @@ while running:
             screen.blit(Score_text, (WIDTH // 2 - Score_text.get_width() // 2, HEIGHT // 3))
             break
 
+    #Enemy Spawner
     if current_time - enemy_spawn_time >= 1000 and player_alive:  # 1000 milliseconds = 1 seconds
         # Spawn a new enemy at a random position
         new_enemy = Enemy(player_1, screen, random.randint(0, 200), random.randint(0, HEIGHT), WIDTH, HEIGHT, wall_rect, 'wizard')

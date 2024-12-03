@@ -1,7 +1,6 @@
 import pygame
 import math
 from player import Player
-import ax
 
 
 class Enemy(Player):
