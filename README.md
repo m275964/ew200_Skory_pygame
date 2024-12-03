@@ -3,7 +3,7 @@
 ![Start Screen](/photos/start_screen.PNG)
 ### In this magical word, you must survive the onsault
 ### of wizards that have come for your soul. Fight and
-### surive for as long as possible in this surival action game
+### surive for as long as possible in this surival action game.
 
 ![Footage](/photos/In_game_screen.PNG)
 
